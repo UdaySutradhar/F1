@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
-// Define the shape of the data coming from Python
 export interface CarTelemetry {
+  name: string;
   speed: number;
   brake: number;
   throttle: number;
@@ -23,7 +23,6 @@ export const useTelemetry = (url: string) => {
     ws.onclose = () => setIsConnected(false);
 
     ws.onmessage = (event) => {
-      // The Python backend sends a JSON string of the 22-car dictionary
       const data: GridTelemetry = JSON.parse(event.data);
       setTelemetry(data);
     };

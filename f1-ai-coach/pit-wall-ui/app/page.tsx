@@ -4,7 +4,6 @@ import { Box, SimpleGrid, Text, Progress, Badge, Flex, Heading } from '@chakra-u
 import { useTelemetry } from '../hooks/useTelemetry';
 
 export default function PitWall() {
-  // Connect to the Python WebSocket server
   const { telemetry, isConnected } = useTelemetry('ws://localhost:8765');
 
   return (
@@ -15,14 +14,12 @@ export default function PitWall() {
         <Heading size="lg" letterSpacing="tight">
           F1 Pit Wall Telemetry
         </Heading>
-        {/* Changed colorScheme to colorPalette */}
         <Badge colorPalette={isConnected ? 'green' : 'red'} p={2} borderRadius="md">
           {isConnected ? 'LIVE (10Hz)' : 'DISCONNECTED'}
         </Badge>
       </Flex>
       
       {/* 22-Car Grid */}
-      {/* Changed spacing={4} to gap={4} */}
       <SimpleGrid columns={{ base: 2, md: 4, lg: 6 }} gap={4}>
         {Object.entries(telemetry).map(([driverIndex, data]) => (
           <Box 
@@ -34,10 +31,9 @@ export default function PitWall() {
             borderColor="gray.700"
           >
             <Flex justify="space-between" align="center" mb={3}>
-              <Text fontWeight="bold" fontSize="lg" color="gray.300">
-                CAR {driverIndex}
+              <Text fontWeight="bold" fontSize="lg" color="gray.300" truncate maxWidth="150px">
+                {data.name}
               </Text>
-              {/* Changed colorScheme to colorPalette */}
               <Badge colorPalette="blue">GEAR {data.gear}</Badge>
             </Flex>
             
@@ -50,7 +46,6 @@ export default function PitWall() {
                 <Text fontSize="xs" color="gray.400" fontWeight="bold">THROTTLE</Text>
                 <Text fontSize="xs" color="green.400">{Math.round(data.throttle)}%</Text>
               </Flex>
-              {/* V3 Compound Progress Component */}
               <Progress.Root value={data.throttle} size="sm" colorPalette="green">
                 <Progress.Track bg="gray.700">
                   <Progress.Range />
@@ -63,7 +58,6 @@ export default function PitWall() {
                 <Text fontSize="xs" color="gray.400" fontWeight="bold">BRAKE</Text>
                 <Text fontSize="xs" color="red.400">{Math.round(data.brake)}%</Text>
               </Flex>
-              {/* V3 Compound Progress Component */}
               <Progress.Root value={data.brake} size="sm" colorPalette="red">
                 <Progress.Track bg="gray.700">
                   <Progress.Range />
