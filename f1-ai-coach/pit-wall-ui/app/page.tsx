@@ -2,9 +2,13 @@
 
 import { Box, SimpleGrid, Text, Progress, Badge, Flex, Heading } from '@chakra-ui/react';
 import { useTelemetry } from '../hooks/useTelemetry';
+import TelemetryTrace from '../components/TelemetryTrace';
 
 export default function PitWall() {
   const { telemetry, isConnected } = useTelemetry('ws://localhost:8765');
+
+  // Focus the main chart on Car Index 0 
+  const playerCarData = telemetry["0"];
 
   return (
     <Box bg="gray.900" minH="100vh" p={6} color="white">
@@ -19,7 +23,13 @@ export default function PitWall() {
         </Badge>
       </Flex>
       
-      {/* 22-Car Grid */}
+      {/* --- NEW: The Live Trace Chart --- */}
+      <Box mb={8}>
+        <TelemetryTrace carData={playerCarData} />
+      </Box>
+      
+      {/* --- 22-Car Grid --- */}
+      <Heading size="md" mb={4} color="gray.400">Grid Overview</Heading>
       <SimpleGrid columns={{ base: 2, md: 4, lg: 6 }} gap={4}>
         {Object.entries(telemetry).map(([driverIndex, data]) => (
           <Box 
