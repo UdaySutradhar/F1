@@ -16,7 +16,7 @@ const formatTime = (ms: number) => {
 export default function PitWall() {
   const [mounted, setMounted] = useState(false);
   const { telemetry, isConnected } = useTelemetry('ws://localhost:8765');
-  const playerCarData = telemetry["0"];
+  const playerCarData = Object.values(telemetry).find(car => (car as any).is_player) || telemetry["0"];
 
   useEffect(() => {
     setMounted(true);
