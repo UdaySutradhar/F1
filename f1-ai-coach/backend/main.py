@@ -79,6 +79,7 @@ def main():
             for i in range(22):
                 car = packet.m_carTelemetryData[i]
                 grid_telemetry[i].update({
+                    "is_player": (i == my_index),
                     "speed": car.m_speed,
                     "brake": car.m_brake * 100,
                     "throttle": car.m_throttle * 100,
