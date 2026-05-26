@@ -2,10 +2,19 @@ import { useState, useEffect } from 'react';
 
 export interface CarTelemetry {
   name: string;
+  position: number;
   speed: number;
   brake: number;
   throttle: number;
   gear: number;
+  rpm: number;
+  tire_temp: number;
+  brake_temp: number;
+  tire_wear: number;
+  wing_damage: number;
+  fuel: number;
+  lap_time_ms: number;
+  flag: number;
 }
 
 export interface GridTelemetry {
