@@ -34,8 +34,11 @@ async def broadcast_telemetry(websocket):
         await websocket.send(json.dumps(grid_telemetry))
         await asyncio.sleep(0.1) 
 
-threading.Thread(target=lambda: asyncio.run(asyncio.serve(broadcast_telemetry, "localhost", 8765)), daemon=True).start()
+async def start_server():
+    async with websockets.serve(broadcast_telemetry, "localhost", 8765):
+        await asyncio.Future() # Keeps the server running indefinitely
 
+threading.Thread(target=lambda: asyncio.run(start_server()), daemon=True).start()
 # ==========================================
 # 2. THE TELEMETRY LOOP
 # ==========================================
