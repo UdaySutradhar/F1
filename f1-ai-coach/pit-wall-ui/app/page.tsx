@@ -1,10 +1,10 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { Box, SimpleGrid, Text, Progress, Badge, Flex, Heading, Grid, GridItem } from '@chakra-ui/react';
 import { useTelemetry } from '../hooks/useTelemetry';
 import TelemetryTrace from '../components/TelemetryTrace';
 
-// Helper function to turn milliseconds into a readable lap time (e.g., 1:24.352)
 const formatTime = (ms: number) => {
   if (!ms) return "0:00.000";
   const mins = Math.floor(ms / 60000);
@@ -14,12 +14,18 @@ const formatTime = (ms: number) => {
 };
 
 export default function PitWall() {
+  const [mounted, setMounted] = useState(false);
   const { telemetry, isConnected } = useTelemetry('ws://localhost:8765');
   const playerCarData = telemetry["0"];
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
   return (
     <Box bg="gray.900" minH="100vh" p={6} color="white">
-      
       <Flex justify="space-between" align="center" mb={6}>
         <Heading size="lg" letterSpacing="tight">
           PRO F1 Pit Wall
