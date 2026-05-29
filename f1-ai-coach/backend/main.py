@@ -48,6 +48,7 @@ def main():
 
     while True:
         packet = listener.get()
+        print(f"DEBUG: Caught a packet! ID: {packet.m_header.m_packetId if packet else 'None'}")
         if not packet:
             continue
             
